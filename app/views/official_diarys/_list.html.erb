@@ -1,0 +1,119 @@
+<section class="w-full">
+  <div class="container mx-auto min-w-[984px]">
+    <div class="flex flex-col gap-4">
+      <!-- Cabeçalho -->
+      <div class="grid grid-cols-12 xl:gap-4 items-center border-b border-[#a9b2bb] bg-[#F8F9FD] px-3 py-2">
+        <div class="flex items-center gap-2 col-span-1">
+          <span class="text-[#5B6191]">Nº Edição</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-4">
+          <%= image_tag "icons/icon_file.png" %>
+          <span class="text-[#5B6191]">Documento</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-2">
+          <%= image_tag "icons/icon_calendar.png" %>
+          <span class="text-[#5B6191]">Publicação</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-2">
+          <%= image_tag "icons/ion_pricetags.png" %>
+          <span class="text-[#5B6191]">Categoria</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-2">
+          <%= image_tag "icons/icon_pricetags2.png" %>
+          <span class="text-[#5B6191]">Identificador</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-1">
+          <%= image_tag "icons/icon_archive.png" %>
+          <span class="text-[#5B6191]">Arquivo</span>
+        </div>
+      </div>
+
+      <!-- Loop Diary -->
+      <% @diarys.each do |diary| %>
+        <% if diary.published? %>
+          <div class="flex flex-col">
+            <div class="grid grid-cols-12 gap-4 items-center border-b border-[#f2f3f4] bg-[#F8F9FD] px-3 py-2 tablinks" onclick="toggleTab(event, 'tab<%= diary.id %>')">
+              <div class="flex items-center gap-2 col-span-1">
+                <span class=""><%= diary.edition %></span>
+              </div>
+              <div class="flex items-center gap-2 col-span-4">
+                <%= image_tag "icons/icon_file.png" %>
+                <span class="">Caderno do dia</span>
+              </div>
+              <div class="flex items-center gap-2 col-span-6">
+                <span class=""><%= diary.created_at.strftime('%d/%m/%Y') %></span>
+              </div>
+              <div class="flex items-center justify-between gap-2 col-span-1">
+                <%= link_to download_combined_pdf_admin_official_diary_path(diary.id), target: "_blank" do %>
+                  <%= image_tag "icons/icon_file3.png" %>
+                <% end %>
+                <%= image_tag "icons/icon_arow_up2.png" %>
+              </div>
+            </div>
+
+            <!-- Conteúdo da Aba -->
+            <div id="tab<%= diary.id %>" class="tabcontent" style="display: none;">
+              <% diary.sections.each do |section| %>
+                <div class="grid grid-cols-12 gap-4 items-center border-b border-[#F8F9FD] px-3 py-4">
+                  <div class="flex items-center gap-2 col-span-1">
+                    <span class="text-sm"><%= diary.edition %></span>
+                  </div>
+                  <div class="flex items-center gap-2 col-span-4">
+                    <span class="text-sm"><%= section.title %></span>
+                  </div>
+                  <div class="flex items-center gap-2 col-span-2">
+                    <span class="text-sm"><%#= section.created_at.strftime('%d/%m/%Y') %></span>
+                  </div>
+                  <div class="flex items-center gap-2 col-span-2">
+                    <span class="text-sm"><%= section.diary_category.name %></span>
+                  </div>
+                  <div class="flex items-center gap-2 col-span-2">
+                    <span class="text-sm"><%= section.id %></span>
+                  </div>
+                  <div class="flex items-center gap-2 col-span-1">
+                    <% if section.file_sections.present? %>
+                      <% section.file_sections.each do |file_section| %>
+                        <%= link_to file_section.file.url, target: "_blank" do %>
+                          <%= image_tag "icons/icon_file2.png", alt: "Visualizar Arquivo PDF Anexado" %>
+                        <% end %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to download_text_pdf_admin_official_diary_path(diary.id, section_id: section.id), target: "_blank" do %>
+                        <%= image_tag "icons/icon_file2.png", alt: "Baixar PDF da Seção" %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      <%= paginate @diarys %>
+    </div>
+  </div>
+</section>
+
+<script>
+  function toggleTab(evt, tabName) {
+    var tabContent = document.getElementById(tabName);
+    var buttons = document.querySelectorAll('.tablinks');
+
+    if (tabContent.style.display === "block") {
+      tabContent.style.display = "none";
+      evt.currentTarget.className = evt.currentTarget.className.replace(" active", "");
+    } else {
+      var openTabs = document.querySelectorAll('.tabcontent[style*="display: block"]');
+      if (openTabs.length > 0) {
+        openTabs.forEach(function(openTab) {
+          openTab.style.display = "none";
+        });
+        buttons.forEach(function(button) {
+          button.className = button.className.replace(" active", "");
+        });
+      }
+      tabContent.style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  }
+</script>

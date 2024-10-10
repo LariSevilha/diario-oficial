@@ -1,0 +1,35 @@
+<% if paginated_collection.present? %>
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <% if paginated_collection.first_page? %>
+        <li class="page-item disabled">
+          <span class="page-link">Anterior</span>
+        </li>
+      <% else %>
+        <li class="page-item">
+          <%= link_to 'Anterior', url_for(params.permit(:controller, :action, :page).merge(page: paginated_collection.prev_page)), class: 'page-link' %>
+        </li>
+      <% end %>
+      <% (1..paginated_collection.total_pages).each do |page| %>
+        <% if page == paginated_collection.current_page %>
+          <li class="page-item active">
+            <span class="page-link"><%= page %> <span class="sr-only">(current)</span></span>
+          </li>
+        <% else %>
+          <li class="page-item">
+            <%= link_to page, url_for(params.permit(:controller, :action, :page).merge(page: page)), class: 'page-link' %>
+          </li>
+        <% end %>
+      <% end %>
+      <% if paginated_collection.last_page? %>
+        <li class="page-item disabled">
+          <span class="page-link">Próximo</span>
+        </li>
+      <% else %>
+        <li class="page-item">
+          <%= link_to 'Próximo', url_for(params.permit(:controller, :action, :page).merge(page: paginated_collection.next_page)), class: 'page-link' %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>

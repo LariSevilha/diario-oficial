@@ -1,0 +1,7 @@
+<% if current_user.logged.nil? %>
+  <h1>Você não está logado em nenhuma entidade</h1>
+  <p>faça login para ter acesso ao diário</p>
+<% else %>
+  <h1>Você está logado</h1>
+  <p>Bem vindo a <%= Entity.find_by_id(current_user.logged).name_entity %></p>
+<% end %>

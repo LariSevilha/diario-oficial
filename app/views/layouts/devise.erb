@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Diário Oficial</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= display_meta_tags %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= hotwire_livereload_tags if Rails.env.development? %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <% [notice, alert].compact.each do |notification| %>
+      <%= render "shared/notification", notification: notification %>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

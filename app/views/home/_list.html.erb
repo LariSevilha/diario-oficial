@@ -1,0 +1,181 @@
+<section class="w-full">
+  <div class="container mx-auto min-w-[984px]">
+    <div class="flex flex-col gap-4">
+      <div class=" grid grid-cols-12 xl:gap-4 items-center border-b border-[#a9b2bb] bg-[#F8F9FD] px-3 py-2">
+        <div class="flex items-center gap-2 col-span-1">
+          <span class="text-[#5B6191]">Nº Edição</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-4">
+          <%= image_tag "icons/icon_file.png"%>
+          <span class="text-[#5B6191]">Documento</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-2">
+          <%= image_tag "icons/icon_calendar.png"%>
+          <span class="text-[#5B6191]">Publicação</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-2">
+          <%= image_tag "icons/ion_pricetags.png"%>
+          <span class="text-[#5B6191]">Caregoria</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-2">
+          <%= image_tag "icons/icon_pricetags2.png"%>
+          <span class="text-[#5B6191]">Identificador</span>
+        </div>
+        <div class="flex items-center gap-2 col-span-1">
+          <%= image_tag "icons/icon_archive.png"%>
+          <span class="text-[#5B6191]">Arquivo</span>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="grid grid-cols-12 gap-4 items-center border-b border-[#f2f3f4] bg-[#F8F9FD] px-3 py-2 tablinks" onclick="toggleTab(event, 'tab1')">
+          <div class="flex items-center gap-2 col-span-1">
+            <span class="">Nº Edição</span>
+          </div>
+          <div class="flex items-center gap-2 col-span-4">
+            <%= image_tag "icons/icon_file.png"%>
+            <span class="">CADERNO DO DIA</span>
+          </div>
+          <div class="flex items-center gap-2 col-span-6">
+            <span class="">13/08/2024</span>
+          </div>
+          <div class="flex items-center justify-between gap-2 col-span-1">
+            <%= image_tag "icons/icon_file3.png"%>
+            <%= image_tag "icons/icon_arow_up2.png"%>
+          </div>
+        </div>
+        <div id="tab1" class="tabcontent" style="display: none;">
+          <!-- Conteúdo da Tab 1 -->
+          <div class="grid grid-cols-12 gap-4 items-center border-b border-[##F8F9FD] px-3 py-4">
+            <div class="flex items-center gap-2 col-span-1">
+              <span class="text-sm">1815</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-4">
+              <span class="text-sm">104 DAIANE CRISTINA ROBERTO</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">13/08/2024</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">Extrato de Contrato</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">10083B614386284</span>
+            </div>
+            <div class="flex items-center justify-between gap-2 col-span-1">
+              <%= image_tag "icons/icon_file2.png"%>
+              <%= image_tag "icons/icon_file3.png"%>
+            </div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 items-center border-b border-[##F8F9FD] px-3 py-4">
+            <div class="flex items-center gap-2 col-span-1">
+              <span class="text-sm">1815</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-4">
+              <span class="text-sm">104 DAIANE CRISTINA ROBERTO</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">13/08/2024</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">Extrato de Contrato</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">10083B614386284</span>
+            </div>
+            <div class="flex items-center justify-between gap-2 col-span-1">
+              <%= image_tag "icons/icon_file2.png"%>
+              <%= image_tag "icons/icon_file3.png"%>
+            </div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 items-center border-b border-[##F8F9FD] px-3 py-4">
+            <div class="flex items-center gap-2 col-span-1">
+              <span class="text-sm">1815</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-4">
+              <span class="text-sm">104 DAIANE CRISTINA ROBERTO</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">13/08/2024</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">Extrato de Contrato</span>
+            </div>
+            <div class="flex items-center gap-2 col-span-2">
+              <span class="text-sm">10083B614386284</span>
+            </div>
+            <div class="flex items-center justify-between gap-2 col-span-1">
+              <%= image_tag "icons/icon_file2.png"%>
+              <%= image_tag "icons/icon_file3.png"%>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="grid grid-cols-12 gap-4 items-center border-b border-[#DEE2E6] bg-[#F8F9FD] px-3 py-2 tablinks" onclick="toggleTab(event, 'tab2')">
+          <div class="flex items-center gap-2 col-span-1">
+            <span class="">Nº Edição</span>
+          </div>
+          <div class="flex items-center gap-2 col-span-4">
+            <%= image_tag "icons/icon_file.png"%>
+            <span class="">CADERNO DO DIA</span>
+          </div>
+          <div class="flex items-center gap-2 col-span-6">
+            <span class="">13/08/2024</span>
+          </div>
+          <div class="flex items-center justify-between gap-2 col-span-1">
+            <%= image_tag "icons/icon_file3.png"%>
+            <%= image_tag "icons/icon_arow_up2.png"%>
+          </div>
+        </div>
+        <div id="tab2" class="tabcontent" style="display: none;">
+          <!-- Conteúdo da Tab 2 -->67jhhg6h56hg65
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="grid grid-cols-12 gap-4 items-center border-b border-[#DEE2E6] bg-[#F8F9FD] px-3 py-2 tablinks" onclick="toggleTab(event, 'tab3')">
+          <div class="flex items-center gap-2 col-span-1">
+            <span class="">Nº Edição</span>
+          </div>
+          <div class="flex items-center gap-2 col-span-4">
+            <%= image_tag "icons/icon_file.png"%>
+            <span class="">CADERNO DO DIA</span>
+          </div>
+          <div class="flex items-center gap-2 col-span-6">
+            <span class="">13/08/2024</span>
+          </div>
+          <div class="flex items-center justify-between gap-2 col-span-1">
+            <%= image_tag "icons/icon_file3.png"%>
+            <%= image_tag "icons/icon_arow_up2.png"%>
+          </div>
+        </div>
+        <div id="tab3" class="tabcontent" style="display: none;">
+          <!-- Conteúdo da Tab 3 -->65165165165
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function toggleTab(evt, tabName) {
+    var tabContent = document.getElementById(tabName);
+    var buttons = document.querySelectorAll('.tablinks');
+
+    if (tabContent.style.display === "block") {
+      tabContent.style.display = "none";
+      evt.currentTarget.className = evt.currentTarget.className.replace(" active", "");
+    } else {
+      var openTabs = document.querySelectorAll('.tabcontent[style*="display: block"]');
+      if (openTabs.length > 0) {
+        openTabs.forEach(function(openTab) {
+          openTab.style.display = "none";
+        });
+        buttons.forEach(function(button) {
+          button.className = button.className.replace(" active", "");
+        });
+      }
+      tabContent.style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  }
+</script>
+</section>

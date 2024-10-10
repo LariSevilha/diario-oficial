@@ -1,0 +1,10 @@
+<div class="form-group">
+  <label for="<%= id %>">Selecione uma ou mais Entidades:</label>
+  <select id="<%= id %>" name="user[entity_ids][]" class="form-control select2" multiple="multiple" style="width: 100%">
+    <% Entity.all.each do |et| %>
+      <option value="<%= et.id %>" <%= 'selected' if @user.entitys.include?(et) %>>
+        <%= et.name_entity %>
+      </option>
+      <% end %>
+    </select>
+  </div>

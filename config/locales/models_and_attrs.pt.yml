@@ -1,0 +1,91 @@
+pt:
+  activerecord:
+    models:
+      photos_service: "Fotos de Serviços"
+      user:
+        one: "Usuário"
+        other: "Usuários"
+      office:
+        one: "Cargo"
+        other: "Cargos"
+      type_entity:
+        one: "Tipo de Entidade"
+        other: "Tipos de Entidade"
+      entity:
+        one: "Entidade"
+        other: "Entidades"
+      diary_category:
+        one: "Categoria de diário"
+        other: "Categorias de diário"
+      diary_sub_category:
+        one: "Subcategoria de diário"
+        other: "Subcategorias de diário"
+      branch_government:
+        one: "Poder"
+        other: "Poderes"
+      official_diary:
+        one: "Diário Oficial"
+        other: "Diários Oficiais"
+
+    attributes:
+      user:
+        name: "Nome"
+        email: "E-mail"
+        slug: "Slug"
+        avatar: "Avatar"
+        cpf: "CPF"
+        rg: "RG"
+        date_birth: "Data de Nascimento"
+        sex: "Sexo"
+        functional_registration: "Registro Funcional"
+        cep: "CEP"
+        uf: "Estado"
+        city: "Cidade"
+        street: "Rua"
+        neighborhood: "Bairro"
+        number_address: "Número do Endereço"
+        complement: "Complemento"
+        phone: "Telefone"
+        status: "Ativo?"
+        register: "Cadastrar"
+        read: "Ler"       
+        publish: "Publicar"      
+        password: "Senha"
+        password_confirmation: "Confirmar senha"
+        office: "Cargo"
+      office:
+        name: "Nome do Cargo"
+      type_entity:
+        name: "Tipo"
+      entity:
+        number_edition: "Número de edição"
+        cnpj: "CNPJ"
+        phone: "Telefone"
+        type_entity: "Tipo de Entidade"
+        user: "Gestor"
+        name_entity: "Nome da Entidade"
+        uf: "Estado"
+        city: "Cidade"
+        cep: "CEP"
+        street: "Rua"
+        number_address: "Número"
+        complement: "Complemento"
+        slug: "Slug"
+        law: "Lei"
+        name_diary: "Nome do Diário"
+        logo: "Logo"
+        status: "Ativo?"
+        type_entity: "Tipo de Entidade"
+      diary_category:
+        name: "Nome da categoria"
+      diary_sub_category:
+        name: "Nome da subcategoria"
+        diary_category: "categoria de diário"
+      branch_government:
+        name: "Nome"
+      official_diary:
+        edition: "Edição"
+        text: "Texto"
+        certificate: "Certificado"
+       
+       

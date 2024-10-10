@@ -1,0 +1,199 @@
+<%= render "/admin/shared/modal_delete" %>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <h4 class="mt-0 header-title"><%= t("activerecord.models.official_diary", count: 2) %></h4>
+        <%= render "/admin/shared/search" %>
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th><%= t("activerecord.attributes.official_diary.id") %></th>
+                <th><%= t("activerecord.attributes.official_diary.edition") %></th>
+                <th><%= t("activerecord.attributes.official_diary.status") %></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @official_diarys.each do |official_diary| %>
+                <tr class="<%= 'published' if official_diary.published? %>">
+                  <td><%= official_diary.id %></td>
+                  <td><%= official_diary.edition %></td>
+                  <td>
+                    <% if official_diary.published? %>
+                      <span class="badge badge-success">Publicado</span>
+                    <% else %>
+                      <span class="badge badge-warning">Não Publicado</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to '#', class: "btn btn-warning publish-button #{'disabled-link' if official_diary.published?}", title: 'Publicar', data: { toggle: 'modal', target: "#publishDiaryModal-#{official_diary.id}", published: official_diary.published? } do %>
+                      <i class="mdi mdi-file-document-box"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to download_combined_pdf_admin_official_diary_path(official_diary), class: "btn btn-success", title: 'Mostrar detalhes', target: "_blank" do %>
+                      <i class="fa fa-eye"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to edit_admin_official_diary_path(official_diary), class: "btn btn-primary #{'disabled-link' if official_diary.published?}", title: 'Editar' do %>
+                      <i class="dripicons-document-edit"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to '#', class: "btn btn-danger delete-button #{'disabled-link' if official_diary.published?}", title: 'Deletar', data: { toggle: 'modal', target: "#deleteDiaryModal-#{official_diary.id}" } do %>
+                      <i class="dripicons-document-delete"></i>
+                    <% end %>
+                  </td>
+                </tr>
+                <!-- Modal para deletar -->
+                <div
+                  class="modal fade"
+                  id="deleteDiaryModal-<%= official_diary.id %>"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="deleteDiaryModalLabel-<%= official_diary.id %>"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deleteDiaryModalLabel-<%= official_diary.id %>">Deletar Diário</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Após a exclusão, não será mais possível recuperar essa edição.</p>
+                        <%= form_with model: official_diary, url: admin_official_diary_path(official_diary), method: :delete, local: true do |form| %>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <%= form.submit "Deletar", class: "btn btn-danger" %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Modal para publicar -->
+                <div
+                  class="modal fade"
+                  id="publishDiaryModal-<%= official_diary.id %>"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="publishDiaryModalLabel-<%= official_diary.id %>"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="publishDiaryModalLabel-<%= official_diary.id %>">Publicar Diário - Edição:
+                          <%= official_diary.edition %></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p class="text-danger"><strong>Atenção!</strong></p>
+                        <p class="text-danger">Após a publicação, esta edição não poderá ser editada ou excluída.</p>
+                        <%= form_with model: official_diary, url: publish_diary_admin_official_diary_path(official_diary), method: :post, local: false, format: :js do |form| %>
+                          <div class="form-group">
+                            <%= form.label :certificate, "Certificado" %>
+                            <%= form.file_field :certificate, class: "form-control" %>
+                          </div>
+                          <div class="form-group">
+                            <%= form.label :temp_password, "Senha do certificado" %>
+                            <%= form.password_field :temp_password, class: "form-control" %>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <%= form.submit "Publicar", class: "btn btn-success" %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <br>
+        <%= link_to new_admin_official_diary_path, class: 'btn btn-info' do %>
+          <i class="typcn typcn-document-add"></i>
+          Adicionar
+        <% end %>
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+          <%= paginate @official_diarys, theme: :admin, paginator: "kaminari/admin/paginator", paginated_collection: @official_diarys %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal para mostrar detalhes -->
+<div class="modal fade" id="showDetailsModal" tabindex="-1" role="dialog" aria-labelledby="showDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showDetailsModalLabel">Detalhes do Diário</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <iframe id="pdfFrame" src="" width="100%" height="500px"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const publishButtons = document.querySelectorAll('.publish-button');
+  const deleteButtons = document.querySelectorAll('.delete-button');
+  const showDetailsButtons = document.querySelectorAll('.show-details-button');
+
+  publishButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      const isPublished = button.getAttribute('data-published') === 'true';
+       
+      if (isPublished) {
+        event.preventDefault();
+        const warningCard = document.getElementById('publishedWarningCard');
+        warningCard.style.display = 'block';
+      } else { 
+        const targetModal = button.getAttribute('data-target');
+        $(targetModal).modal('show');
+      }
+    });
+  });
+
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+      const targetModal = button.getAttribute('data-target');
+      $(targetModal).modal('show');
+    });
+  });
+
+  showDetailsButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+      const pdfUrl = button.getAttribute('data-pdf_url');
+      const pdfFrame = document.getElementById('pdfFrame');
+      pdfFrame.src = pdfUrl;
+      $('#showDetailsModal').modal('show');
+    });
+  });
+});
+</script>

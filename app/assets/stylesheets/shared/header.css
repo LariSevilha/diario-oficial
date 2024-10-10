@@ -1,0 +1,17 @@
+/* Estilo personalizado para a transição do menu */
+.mobile-menu-transition {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.7s ease-in-out;
+}
+.mobile-menu-visible {
+  max-height: 1000px;
+}
+#nav {
+  transition: background-color 0.5s, backdrop-filter 0.5s;
+}
+.blur-bg {
+  transition: background-color 0.5s, backdrop-filter 0.5s;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.5); /* Cor de fundo semi-transparente */
+}

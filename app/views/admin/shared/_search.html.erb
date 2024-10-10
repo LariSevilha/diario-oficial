@@ -1,0 +1,10 @@
+<% if action_name == 'index' && controller_name != 'dashboard' %>
+  <li class="list-inline-item notification-list dropdown d-none d-sm-inline-block">
+    <form role="search" class="app-search" method="get" action="<%= url_for %>">
+      <div class="form-group mb-0">
+        <input type="text" name="query" class="form-control" placeholder="Buscar" value="<%= params[:query] %>">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </div>
+    </form>
+  </li>
+<% end %>

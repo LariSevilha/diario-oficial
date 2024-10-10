@@ -1,0 +1,49 @@
+<section class="w-full h-full relative">
+  <%= image_tag "bg-hero1.jpg", class: "fixed w-full h-full object-cover top-0 z-[-2]" %>
+  <div class="w-full h-full bg-[#191969] opacity-90 py-20">
+    <div class="container mx-auto flex items-center justify-center">
+      <div class="flex flex-col items-center justify-center gap-2">
+        <h1 class="text-white text-4xl poppins-bold uppercase">Contato</h1>
+        <div class="border w-[72px] border-white"></div>
+        <span class="text-white montserrat-light uppercase">HOME - Contato -
+          <%= params[:q] %></span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="w-full bg-white py-16">
+  <div class="container mx-auto flex flex-col gap-6">
+    <h1 class="poppind-bold text-[#555555] text-xl border p-6 m-6">Resultados Para:
+      <%= params[:q] %>
+    </h1>
+    <% if @result_search.present? %>
+      <div class="flex grid-cols-4 gap-4">
+        <% @result_search.each do |result_search| %>
+          <%= link_to product_path(result_search[:slug]), class: "" do %>
+            <div class="flex flex-col border rounded-md p-4 w-fit">
+              <% if result_search.key?(:photo) && result_search[:photo].present? %>
+                <%= image_tag result_search[:photo].url, class: "h-32 rounded-md bg-[#555555]" %>
+              <% else %>
+                <%= image_tag "logo-footer.svg", class: "h-32 rounded-md bg-[#555555]" %>
+              <% end %>
+              <div class="flex flex-col gap-2">
+                <p class="text-[#555555]">
+                  <%= type_name(result_search[:type], result_search[:category_name]) %>
+                </p>
+                <p class="">
+                  <%= truncate(strip_tags(result_search[:name]), length: 25) %>
+                </p>
+                <span><%= link_to "Ir para", product_path(result_search[:slug]), class: "rounded p-2 bg-[#132C40] text-white w-fit h-fit" %></span>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <h4 class="">
+        Desculpe, nenhum resultado encontrado.
+      </h4>
+    <% end %>
+    <%= paginate @result_search %>
+  </div>
+</section>

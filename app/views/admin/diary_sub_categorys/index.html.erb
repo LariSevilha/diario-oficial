@@ -1,0 +1,58 @@
+<%= render '/admin/shared/modal_delete' %>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <h4 class="mt-0 header-title"><%= t('activerecord.models.diary_sub_category', count: 2) %></h4>
+        <%= render '/admin/shared/search' %> <!-- Campo de busca adicionado aqui -->
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th><%= t('activerecord.attributes.diary_sub_category.id') %></th>
+                <th><%= t('activerecord.attributes.diary_sub_category.name') %></th>
+                <th><%= t('activerecord.attributes.diary_sub_category.diary_category') %></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @diary_sub_categorys.each do |diary_sub_category| %>
+                <tr>
+                  <td><%= diary_sub_category.id %></td>
+                  <td><%= diary_sub_category.name %></td>
+                  <td><%= diary_sub_category.diary_category.name %></td>
+                  <td>
+                    <%= link_to [:admin, diary_sub_category], class: 'btn btn-success', title: 'Mostrar detalhes' do %>
+                      <i class="fa fa-eye"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to edit_admin_diary_sub_category_path(diary_sub_category), class: 'btn btn-primary', title: 'Editar' do %>
+                      <i class="dripicons-document-edit"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= button_to [:admin, diary_sub_category], method: :delete, class: 'btn btn-danger delete-button', formaction: admin_diary_sub_category_path(diary_sub_category), id: "deleteButton-#{diary_sub_category.id}", title: 'Deletar' do %>
+                      <i class="dripicons-document-delete"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <br>
+        <%= link_to new_admin_diary_sub_category_path, class: 'btn btn-info' do %>
+          <i class="typcn typcn-document-add"></i> Adicionar
+        <% end %>
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+          <%= paginate @diary_sub_categorys, theme: :admin, paginator: 'kaminari/admin/paginator', paginated_collection: @diary_sub_categorys %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end row -->

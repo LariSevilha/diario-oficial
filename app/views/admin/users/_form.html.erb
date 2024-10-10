@@ -1,0 +1,218 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <% if @user.errors.any? %>
+          <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div id="error_explanation">
+              <h2><%= pluralize(@user.errors.count, "erros") %> não permitiram salvar:</h2>
+              <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+        <%= form_for([:admin, @user]) do |f| %>
+          <div class="form-group">
+            <%= f.label :email %><br>
+            <%= f.text_field :email, class: 'form-control', type: "email" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :name %><br>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password %><br>
+            <%= f.password_field :password, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password_confirmation %><br>
+            <%= f.password_field :password_confirmation, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :office %>
+            <%= f.collection_select :office_id, Office.all, :id, :name, { prompt: "Escolha um cargo" }, { class: 'custom-select' } %>
+          </div>
+          <div class="form-group">
+            <%= f.label :avatar %><br>
+            <%= f.file_field :avatar %><br>
+            <br>
+            <% if @user.avatar.present? %>
+              <div class="" id="user-avatar">
+                <%= image_tag @user.avatar.url, class: "img-thumbnail", alt: "Avatar do usuário", style: "width: 200px; height: 200px;" %>
+                <button type="button" class="btn btn-danger waves-effect waves-light" onclick="deleteImage('user-avatar', <%= @user.id %>)">
+                  <i class="ti-trash" title="deletar"></i>
+                </button>
+              </div>
+            <% end %>
+          </div>
+          <div class="form-group">
+            <%= f.label :cpf %><br>
+            <%= f.text_field :cpf, class: 'form-control cpf' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :rg %><br>
+            <%= f.text_field :rg, class: 'form-control rg' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :date_birth %><br>
+            <%= f.date_field :date_birth, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :sex %><br>
+            <%= f.select :sex, User.sexes.keys.map { |w| [w.humanize, w] }, {}, { class: 'form-control' } %>
+          </div>
+          <div class="form-group">
+            <%= f.label :functional_registration %><br>
+            <%= f.text_field :functional_registration, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :cep %><br>
+            <%= f.text_field :cep, class: 'form-control cep', id: 'cep' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :street %><br>
+            <%= f.text_field :street, class: 'form-control', id: 'street' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :neighborhood %><br>
+            <%= f.text_field :neighborhood, class: 'form-control', id: 'neighborhood' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :city %><br>
+            <%= f.text_field :city, class: 'form-control', id: 'city' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :uf %><br>
+            <%= f.text_field :uf, class: 'form-control', id: 'uf' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :number_address %><br>
+            <%= f.text_field :number_address, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :complement %><br>
+            <%= f.text_field :complement, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :phone %><br>
+            <%= f.text_field :phone, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :status, 'Ativo?', class: 'd-block' %>
+            <label class="switch">
+              <%= f.check_box :status, class: 'custom-control-input', id: 'customSwitchStatus' %>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="card m-b-30">
+                <div class="card-body">
+                  <h4 class="mt-0 header-title">Tipo de usuário</h4>
+                  <ul class="nav nav-tabs" role="tablist">
+                    <% if show_user_tab?(@user, 'super-user') && current_user.super_user == true %>
+                      <li class="nav-item">
+                        <a class="nav-link <%= active_user_tab(@user) == 'super-user' ? 'active' : '' %>" data-toggle="tab" href="#super-user" role="tab">Super usuário</a>
+                      </li>
+                    <% end %>
+                    <% if show_user_tab?(@user, 'user-admin') %>
+                      <li class="nav-item">
+                        <a class="nav-link <%= active_user_tab(@user) == 'user-admin' ? 'active' : '' %>" data-toggle="tab" href="#user-admin" role="tab">Usuário(Admin)</a>
+                      </li>
+                    <% end %>
+                    <% if show_user_tab?(@user, 'common-user') %>
+                      <li class="nav-item">
+                        <a class="nav-link <%= active_user_tab(@user) == 'common-user' ? 'active' : '' %>" data-toggle="tab" href="#common-user" role="tab">Usuário</a>
+                      </li>
+                    <% end %>
+                  </ul>
+                  <div class="tab-content">
+                    <% if show_user_tab?(@user, 'super-user') %>
+                      <div class="tab-pane <%= active_user_tab(@user) == 'super-user' ? 'active' : '' %> p-3" id="super-user" role="tabpanel">
+                        <% if show_user_field?(@user, :super_user) %>
+                          <div class="form-group">
+                            <label>Usuário com acesso a todas as funções e registros do sistema</label>
+                            <div>
+                              <div class="custom-control custom-checkbox">
+                                <%= f.check_box :super_user, { class: 'custom-control-input', id: 'customCheckSuperUser', disabled: @user.persisted? } %>
+                                <label class="custom-control-label" for="customCheckSuperUser">Confirmar?</label>
+                              </div>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                    <% if show_user_tab?(@user, 'user-admin') %>
+                      <div class="tab-pane <%= active_user_tab(@user) == 'user-admin' ? 'active' : '' %> p-3" id="user-admin" role="tabpanel">
+                        <% if show_user_field?(@user, :admin_user) %>
+                          <div class="form-group">
+                            <label>Usuário com permissão para gerenciar entidades, usuários e diários</label>
+                            <div>
+                              <div class="custom-control custom-checkbox">
+                                <%= f.check_box :admin_user, { class: 'custom-control-input', id: 'customCheckAdminUser', disabled: @user.persisted? } %>
+                                <label class="custom-control-label" for="customCheckAdminUser">Confirmar?</label>
+                              </div>
+                            </div>
+                          </div>
+                          <%= render 'select_entitys_user', id: 'entity_ids_user_admin' %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                    <% if show_user_tab?(@user, 'common-user') %>
+                      <div class="tab-pane <%= active_user_tab(@user) == 'common-user' ? 'active' : '' %> p-3" id="common-user" role="tabpanel">
+                        <% if show_user_field?(@user, :common_user) %>
+                          <div class="form-group">
+                            <label>Usuário que pode realizar as ações que lhe são permitidas nos diários</label>
+                            <div>
+                              <div class="custom-control custom-checkbox">
+                                <%= f.check_box :common_user, { class: 'custom-control-input', id: 'customCheckCommonUser', disabled: @user.persisted? } %>
+                                <label class="custom-control-label" for="customCheckCommonUser">Confirmar?</label>
+                              </div>
+                            </div>
+                          </div>
+                          <% if current_user.super_user == true %>
+                            <%= render 'select_entitys_user', id: 'entity_ids_common_user' %>
+                            <% if show_user_field?(@user, :permissions) %>
+                              <div class="form-group" id="permissions">
+                                <label>Permissões</label>
+                                <div>
+                                  <div class="custom-control custom-checkbox">
+                                    <%= f.check_box :register, { class: 'custom-control-input', id: 'customCheckRegister' } %>
+                                    <label class="custom-control-label" for="customCheckRegister">Cadastrar</label>
+                                  </div>
+                                  <div class="custom-control custom-checkbox">
+                                    <%= f.check_box :read, { class: 'custom-control-input', id: 'customCheckRead' } %>
+                                    <label class="custom-control-label" for="customCheckRead">Ler</label>
+                                  </div>
+                                  <div class="custom-control custom-checkbox">
+                                    <%= f.check_box :publish, { class: 'custom-control-input', id: 'customCheckPublish' } %>
+                                    <label class="custom-control-label" for="customCheckPublish">Publicar</label>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary waves-effect waves-light">
+              Salvar
+            </button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

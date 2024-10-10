@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.html\\.erb$",
+        "cmd": "docker compose exec app erb-format ${relativeFile} --write --print-width 180"
+      }
+    ]
+  },
+  "files.eol": "\n",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "typescript.preferences.quoteStyle": "single",
+  "javascript.preferences.quoteStyle": "single"
+}

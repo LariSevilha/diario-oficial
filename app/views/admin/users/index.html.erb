@@ -1,0 +1,64 @@
+<%= render '/admin/shared/modal_delete' %>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <h4 class="mt-0 header-title"><%= t('activerecord.models.user', count: 2) %></h4>
+        <%= render '/admin/shared/search' %>
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th><%= t('activerecord.attributes.user.office') %></th>
+                <th><%= t('activerecord.attributes.user.email') %></th>
+                <th><%= t('activerecord.attributes.user.name') %></th>
+                <th><%= t('activerecord.attributes.user.cpf') %></th>
+                <th><%= t('activerecord.attributes.user.status') %></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td><%= user.id %></td>
+                  <td><%= user.office.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.name %></td>
+                  <td><%= user.cpf %></td>
+                  <td><%=  boolean_format(user.status) %></td>
+                  <td>
+                    <%= link_to [:admin, user], class: 'btn btn-success', title: 'Mostrar detalhes' do %>
+                      <i class="fa fa-eye"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to edit_admin_user_path(user), class: 'btn btn-primary', title: 'Editar' do %>
+                      <i class="dripicons-document-edit"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= button_to [:admin, user], method: :delete, class: 'btn btn-danger delete-button', formaction: admin_user_path(user), id: "deleteButton-#{user.id}", title: 'Deletar' do %>
+                      <i class="dripicons-document-delete"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <br>
+        <%= link_to new_admin_user_path, class: 'btn btn-info' do %>
+          <i class="typcn typcn-document-add"></i> Adicionar
+        <% end %>
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+          <%= paginate @users, theme: :admin, paginator: 'kaminari/admin/paginator', paginated_collection: @users %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end row -->

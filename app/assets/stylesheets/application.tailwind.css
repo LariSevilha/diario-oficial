@@ -1,0 +1,15 @@
+@import "swiper/swiper-bundle";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "./ckeditor";
+
+@import "./shared";
+
+@import "./news/";
+
+@import "./fonts/";
+
+/* @import 'lightgallery/css/lightgallery.css' */
+@import 'lightgallery/css/lightgallery';

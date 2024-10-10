@@ -1,0 +1,40 @@
+<section class="w-full">
+  <div class="container mx-auto">
+    <div class="flex justify-between items-center border rounded-lg bg-[#132C40] px-3 py-2 tablinks" onclick="toggleTab(event, 'tab0')">
+      <div class="flex items-center gap-2">
+        <%= image_tag "icons/icon_search.png"%>
+        <span class="text-white">Busca</span>
+      </div>
+      <div class="">
+        <%= image_tag "icons/icon_arow_dow.png"%>
+      </div>
+    </div>
+    <div class="" id="tab0" style="display: block;">
+      <div class="border border-[#B7B7B7] rounded-lg px-3 py-2 grid grid-cols-6 gap-4 text-[#585858]">
+        <div class="flex flex-col col-span-3">
+          <label for="uni_ges">Unidade Gestora</label>
+          <input type="text" id="uni_ges" class="border border-[#B7B7B7] rounded-lg px-3 py-2" value="Prefeitura Municipal de Jateí">
+        </div>
+        <div class="flex flex-col col-span-3">
+          <label for="uni_ges">Documento</label>
+          <input type="text" id="uni_ges" class="border border-[#B7B7B7] rounded-lg px-3 py-2" placeholder="Busque por palavra chave, ex: Resolucao">
+        </div>
+        <div class="flex flex-col col-span-2">
+          <label for="uni_ges">Período</label>
+          <input type="text" id="uni_ges" class="border border-[#B7B7B7] rounded-lg px-3 py-2"  placeholder="Período">
+        </div>
+        <div class="flex flex-col col-span-2">
+          <label for="uni_ges">Nº Edição</label>
+          <input type="text" id="uni_ges" class="border border-[#B7B7B7] rounded-lg px-3 py-2"  placeholder="Número Edição">
+        </div>
+        <div class="flex flex-col col-span-2">
+          <label for="uni_ges">Identificador</label>
+          <input type="text" id="uni_ges" class="border border-[#B7B7B7] rounded-lg px-3 py-2"  placeholder="Informe o Identificador">
+        </div>
+        <div class="col-span-6">
+          <button class="hover:border border-[#B7B7B7] rounded-lg px-3 py-2 text-white bg-[#132C40] hover:text-[#585858] inside">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

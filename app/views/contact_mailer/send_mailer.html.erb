@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      Contato
+    </title>
+    <style type="text/css">
+      :root{
+        --primary-color:#8d8d8d;
+        --link-copy:#ffffff;
+        --bg-color-body:#f2f3f9;
+        --hr-border-color:lightgray;
+      }
+      *{padding:0;margin:0;box-sizing:border-box;font-size:1rem}#body,.body,body{max-width:728px;margin:0 auto;}.header a{padding:2rem;display:flex;justify-content:center;align-items:center;background-color:var(--primary-color)}.header img{width:100%;max-width:60%}.main{padding:2.5rem 3rem;background-color:var(--bg-color-body)}.main p{margin-bottom:.75rem}.hr{margin:1.5rem auto;border:0;border-top:1px solid var(--hr-border-color)}.main .message .content{padding-top:1rem}.footer .developed{padding:0 3rem 1rem;background-color:var(--bg-color-body)}.footer .developed a{display:flex;justify-content:center;align-items:center;text-decoration:none;color:inherit}.footer .developed img{margin-left:.25rem}.footer .copy{padding:1.25rem;text-align:center;background-color:var(--primary-color)}.footer .copy a{text-decoration:none;color:var(--link-copy)}
+    </style>
+  </head>
+  <body id="body" class="body">
+    <div class="header">
+      <%= link_to @contact["request"] do %>
+        <img src="<%= @contact['request'] %><%= image_url('logo-top.svg') %>"/>
+      <% end %>
+    </div>
+    <div class="main">
+      <p>
+        <b>
+          Olá, tudo bem?
+        </b>
+      </p>
+      <p>
+        <b>
+          Um e-mail acaba de ser preenchido no seu site.
+        </b>
+      </p>
+      <p>
+        O
+        <b>
+          nome
+        </b>
+        da pessoa que enviou é
+        <b>
+          <%= @contact["name"] %>
+        </b>
+      </p>
+      <p>
+        O
+        <b>
+          endereço de e-mail
+        </b>
+        informado foi
+        <b>
+          <%= @contact["email"] %>
+        </b>
+      </p>
+      <p>
+        O
+        <b>
+          telefone
+        </b>
+        informado foi
+        <b>
+          <%= @contact["phone"] %>
+        </b>
+      </p>
+      <hr class="hr">
+      <div class="message">
+        <b>
+          Assunto:
+        </b>
+        <div class="content">
+          <%= @contact["subject"] %>
+        </div>
+      </div>
+      <hr class="hr">
+      <div class="message">
+        <b>
+          Mensagem:
+        </b>
+        <div class="content">
+          <%= @contact["message"] %>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="developed">
+        <%= link_to "https://www.agenciaw3.digital/" do %>
+          Desenvolvido por:
+          <%= image_tag "https://www.agenciaw3.digital/logo_w3.svg" %>
+        <% end %>
+      </div>
+      <div class="copy">
+        <%= link_to ENV["COMPOSE_PROJECT_NAME"], @contact["request"] %>
+      </div>
+    </div>
+  </body>
+</html>

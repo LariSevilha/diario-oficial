@@ -1,0 +1,56 @@
+<%= render '/admin/shared/modal_delete' %>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <h4 class="mt-0 header-title"><%= t('activerecord.models.branch_government', count: 2) %></h4>
+        <%= render '/admin/shared/search' %> <!-- Campo de busca adicionado aqui -->
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th><%= t('activerecord.attributes.branch_government.id') %></th>
+                <th><%= t('activerecord.attributes.branch_government.name') %></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @branch_governments.each do |branch_government| %>
+                <tr>
+                  <td><%= branch_government.id %></td>
+                  <td><%= branch_government.name %></td>
+                  <td>
+                    <%= link_to [:admin, branch_government], class: 'btn btn-success', title: 'Mostrar detalhes' do %>
+                      <i class="fa fa-eye"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to edit_admin_branch_government_path(branch_government), class: 'btn btn-primary', title: 'Editar' do %>
+                      <i class="dripicons-document-edit"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= button_to [:admin, branch_government], method: :delete, class: 'btn btn-danger delete-button', formaction: admin_branch_government_path(branch_government), id: "deleteButton-#{branch_government.id}", title: 'Deletar' do %>
+                      <i class="dripicons-document-delete"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <br>
+        <%= link_to new_admin_branch_government_path, class: 'btn btn-info' do %>
+          <i class="typcn typcn-document-add"></i> Adicionar
+        <% end %>
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+          <%= paginate @branch_governments, theme: :admin, paginator: 'kaminari/admin/paginator', paginated_collection: @branch_governments %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end row -->

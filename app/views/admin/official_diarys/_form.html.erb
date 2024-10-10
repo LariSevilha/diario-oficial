@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <% if @official_diary.errors.any? %>
+          <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div id="error_explanation">
+              <h2><%= pluralize(@official_diary.errors.count, "erros") %>
+                não permitiram salvar:</h2>
+              <ul>
+                <% @official_diary.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+        <!-- Formulário do Official Diary -->
+        <%= form_for([:admin, @official_diary]) do |f| %>
+          <%= f.hidden_field :entity_id, value: current_user.logged %>
+          <div class="form-group">
+            <%= f.label :edition %><br>
+            <%= f.number_field :edition, class: "form-control" %>
+          </div>
+          <% if @official_diary.persisted? %>
+            <div class="form-group">
+              <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#sectionModal">
+                Adicionar Seção
+              </button>
+            </div>
+            <!-- Render table -->
+            <%= render "table_section", official_diary: @official_diary %>
+          <% end %>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary waves-effect waves-light">
+              Salvar
+            </button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Render da partial do modal -->
+<%= render "create_section" %>

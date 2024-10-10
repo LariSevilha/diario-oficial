@@ -1,0 +1,45 @@
+<div class="form-group">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card m-b-30">
+        <div class="card-body">
+          <h4 class="mt-0 header-title">Seções</h4>
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Poder Estatal</th>
+                  <th>Categoria</th>
+                  <th>Subcategoria</th>
+                  <th>Descrição</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @official_diary.sections.each_with_index do |section, index| %>
+                  <tr id="section_<%= section.id %>">
+                    <th scope="row"><%= index + 1 %></th>
+                    <td><%= section.branch_government.name if section.branch_government %></td>
+                    <td><%= section.diary_category.name if section.diary_category %></td>
+                    <td><%= section.diary_sub_category.name if section.diary_sub_category %></td>
+                    <td><%= section.title if section.title %></td>
+                    <td>
+                      <a class="btn btn-sm btn-warning text-white" onclick="editSection(<%= section.id %>)">
+                        Editar
+                      </a>
+                      <a class="btn btn-sm btn-danger text-white" onclick="deleteSection(<%= section.id %>)">
+                        Excluir
+                      </a>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end col -->
+  </div>
+</div>

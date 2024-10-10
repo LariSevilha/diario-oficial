@@ -1,0 +1,204 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+
+DCE="exec"
+DCR="run"
+# -----------------------------------------------------------------------------
+# Helper functions start with _ and aren't listed in this script's help menu.
+# -----------------------------------------------------------------------------
+
+function setup {
+  if ! docker network inspect nginx-network >/dev/null 2>&1; then
+  docker network create nginx-network
+  fi
+  docker compose build
+  docker compose run app yarn
+  docker compose up
+}
+
+function _dce {
+  docker compose "${DCE}" "${@}"
+}
+
+function _dcr {
+  docker compose "${DCR}" --rm "${@}"
+}
+
+# -----------------------------------------------------------------------
+# Run docker compose
+function up {
+  docker compose up
+}
+
+# Run docker compose in detached mode
+function upd {
+  docker compose up -d
+}
+
+# Stops containers and removes containers, networks, volumes, and images created by up
+function down {
+  docker compose down
+}
+
+# Clean all dangling image, container, network and build cache
+function prune {
+  docker image prune -f
+  docker container prune -f
+}
+
+function prune:all {
+  docker system prune --all -f
+}
+
+# Execute in rails container
+function cmd {
+  # Run any command you want in the app container
+  _dcr app "${@}"
+}
+
+function cmd:exec {
+  # Run any command you want in the app container
+  _dce app "${@}"
+}
+
+function rails {
+  # Run any Rails commands
+  cmd:exec rails "${@}"
+}
+
+function rake {
+  # Run any Rails commands
+  cmd:exec rake "${@}"
+}
+
+function rake:run {
+  # Run any Rails commands
+  cmd rake "${@}"
+}
+
+# Mina
+function mina {
+  # Run any Rails commands
+  cmd mina "${@}"
+}
+
+function mina:exec {
+  # Run any Rails commands
+  cmd:exec mina "${@}"
+}
+
+
+# Clean
+function clean {
+  # Remove cache and other machine generates files
+  rm -rf app/assets/builds/* public/assets tmp/* .byebug_history
+}
+
+# Generate scaffold and model, then run migrations
+to_snake_case() {
+    echo "$1" | sed -r 's/([a-z0-9])([A-Z])/\1_\2/g'
+}
+
+function  g_admin_model {
+  local original_model_name=$1
+  local model_name=$(to_snake_case "$original_model_name")  
+  shift
+  local attributes=("$@")
+
+ #generate scaffold
+  cmd:exec rails generate admin:scaffold_controller ${model_name} "${attributes[@]}"
+  local controller_path="app/controllers/admin/$(echo ${model_name} | tr '[:upper:]' '[:lower:]')s_controller.rb"
+  sleep 2
+
+  # generate model
+  cmd:exec rails generate model ${original_model_name} "${attributes[@]}"
+
+  # set admin layout
+  ./admin_scripts/add_admin_layout.sh "$controller_path"
+
+  local plural_model_name=$(echo ${model_name} | tr '[:upper:]' '[:lower:]')s
+  local form_file_path="app/views/admin/${plural_model_name}/_form.html.erb"
+  local index_file_path="app/views/admin/${plural_model_name}/index.html.erb"
+  local show_file_path="app/views/admin/${plural_model_name}/show.html.erb"
+  local edit_file_path="app/views/admin/${plural_model_name}/edit.html.erb"
+  local new_file_path="app/views/admin/${plural_model_name}/new.html.erb"
+  local sidebar_file_path="app/views/admin/shared/_left_sidebar.html.erb"
+
+  #add style in form
+  if [ -f "$form_file_path" ]; then   
+    docker compose run app ruby ./admin_scripts/style_form_fields.rb "$form_file_path" "$(echo ${model_name} | tr '[:upper:]' '[:lower:]')" "${attributes[@]%%:*}"
+    echo "Form styles applied successfully: $form_file_path"
+  else
+    echo "Form file not found: $form_file_path"
+  fi
+
+  # add style in table
+  if [ -f "$index_file_path" ]; then
+    docker compose run app ruby ./admin_scripts/style_index_table.rb "$index_file_path" "$(echo ${model_name} | tr '[:upper:]' '[:lower:]')" "${attributes[@]%%:*}"
+    echo "Index styles applied successfully: $index_file_path"
+  else
+    echo "Index file not found: $index_file_path"
+  fi
+
+  # add style in show
+  if [ -f "$show_file_path" ]; then
+    docker compose run app ruby ./admin_scripts/style_show.rb "$show_file_path" "$(echo ${model_name} | tr '[:upper:]' '[:lower:]')" "${attributes[@]%%:*}"
+    echo "Show styles applied successfully: $show_file_path"
+  else
+    echo "Show file not found: $show_file_path"
+  fi
+
+  # add style in edit
+  if [ -f "$edit_file_path" ]; then
+    docker compose run app ruby ./admin_scripts/style_edit.rb "$edit_file_path" "$(echo ${model_name} | tr '[:upper:]' '[:lower:]')"
+    echo "Edit styles applied successfully: $edit_file_path"
+  else
+    echo "Edit file not found: $edit_file_path"
+  fi
+
+  # add style in new
+  if [ -f "$new_file_path" ]; then
+    docker compose run app ruby ./admin_scripts/style_new.rb "$new_file_path" "$(echo ${model_name} | tr '[:upper:]' '[:lower:]')"
+    echo "New styles applied successfully: $new_file_path"
+  else
+    echo "New file not found: $new_file_path"
+  fi
+
+  if [ -f "$sidebar_file_path" ]; then
+    docker compose run app ruby ./admin_scripts/update_sidebar.rb "$sidebar_file_path" "$(echo ${model_name} | tr '[:upper:]' '[:lower:]')"
+  else
+    echo "Sidebar file not found: $sidebar_file_path"
+  fi
+
+  # Format all ERB views generated by the scaffold using htmlbeautifier
+  find app/views/admin/${plural_model_name} -name "*.erb" -exec docker compose run app htmlbeautifier {} \;
+  docker compose run app htmlbeautifier app/views/admin/shared/_left_sidebar.html.erb
+  echo "ERB files formatted successfully."
+
+  # Run RuboCop on the specific controller generated
+  docker compose run app bundle exec rubocop -A ${controller_path}
+  echo "RuboCop auto-correct applied successfully for ${controller_path}."
+}
+
+# Global rubocop
+function rubocop {
+  # Execute RuboCop for code formatting and linting general
+  docker compose run app bundle exec rubocop -A
+  echo "RuboCop auto-correct applied successfully."
+}
+
+# -----------------------------------------------------------------------
+function help {
+  printf "%s <task> [args]\n\nTasks:\n" "${0}"
+
+  compgen -A function | grep -v "^_" | cat -n
+
+  printf "\nExtended help:\n  Each task has comments for general usage\n"
+  printf "g_admin_model: Generates scaffold and model, then runs migrations.\n"
+}
+
+# This idea is heavily inspired by: https://github.com/adriancooney/Taskfile
+TIMEFORMAT=$'\nTask completed in %3lR'
+time "${@:-help}"

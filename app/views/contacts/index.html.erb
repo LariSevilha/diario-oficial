@@ -1,0 +1,59 @@
+<section class="w-full h-full relative">
+  <%= image_tag "bg-hero1.jpg", class:"fixed w-full h-full object-cover top-0 z-[-2]"%>
+  <div class="w-full h-full bg-[#191969] opacity-90 py-20">
+    <div class="container mx-auto flex items-center justify-center">
+      <div class="flex flex-col items-center justify-center gap-2">
+        <h1 class="text-white text-4xl poppins-bold uppercase">contato</h1>
+        <div class="border w-[72px] border-white"></div>
+        <span class="text-white montserrat-light uppercase">HOME - contato</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="w-full h-full bg-white" data-controller="scroll-active" data-scroll-active-target="section">
+  <div class="container mx-auto flex flex-col md:flex-row gap-5 py-7 center-animation">
+    <div class="w-full md:w-8/12">
+      <div class="flex flex-col w-ful pb-5">
+        <h1 class="text-3xl uppercase poppins-bold text-[#555555]">Formulário de</h1>
+        <h1 class="text-3xl uppercase poppins-bold text-[#555555]">contato</h1>
+      </div>
+      <div class="w-ful">
+        <%= render "contacts/form" %>
+      </div>
+    </div>
+    <div class="w-full md:w-4/12">
+      <div class="flex flex-col w-ful pb-5">
+        <h1 class="text-3xl uppercase poppins-bold text-[#555555]">Informações para</h1>
+        <h1 class="text-3xl uppercase poppins-bold text-[#555555]">contato</h1>
+      </div>
+      <div class="w-ful flex flex-col gap-5">
+        <div class="flex items-center gap-2 border-b pb-5 hover:scale-105 transition duration-300">
+          <%= image_tag "icons/icon_location_info.png", class: "w-6 h-8" %>
+          <span class="text-sm text-[#696969]">Rua</span>
+        </div>
+        <div class="flex items-center gap-2 border-b pb-5 hover:scale-105 transition duration-300">
+          <%= image_tag "icons/icon_fone_info.png", class: "w-7 h-8" %>
+          <span class="text-sm text-[#696969]">Fone: (00)0000-0000</span>
+        </div>
+        <div class="flex items-center gap-2 border-b pb-5 hover:scale-105 transition duration-300">
+          <%= image_tag "icons/icon_envelope_info.png", class: "w-7 h-8" %>
+          <span class="text-sm text-[#696969]">contato@email</span>
+        </div>
+      </div>
+      <div class="w-full flex gap-2 pt-5">
+        <%= image_tag "icons/icon_face_info.png", class: "hover:scale-110 transition duration-300" %>
+        <%= image_tag "icons/icon_twiter_info.png", class: "hover:scale-110 transition duration-300" %>
+        <%= image_tag "icons/icon_google_info.png", class: "hover:scale-110 transition duration-300" %>
+      </div>
+    </div>
+  </div>
+</section>
+<iframe
+  class="bg-white"
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d461.59306277945154!2d-53.35142610171921!3d-22.249770810833727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x948e7dbcaf00ee81%3A0x8bea7e12185dac59!2sMega%20M%C3%B3veis%20Para%20Escrit%C3%B3rio!5e0!3m2!1spt-BR!2sbr!4v1713214859766!5m2!1spt-BR!2sbr"
+  height="400"
+  style="border:0; width: 100%;"
+  allowfullscreen=""
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade"
+></iframe>

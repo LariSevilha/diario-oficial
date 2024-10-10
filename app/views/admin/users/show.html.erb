@@ -1,0 +1,64 @@
+<div class="page-content-wrapper ">
+  <div class="container-fluid">
+    <div class="row d-print-none">
+      <div class="col-sm-12">
+        <h5 class="page-title">Detalhes</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card m-b-30">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="invoice-title"></div>
+                <div class="row">
+                  <div class="col-6">
+                    <address>
+                      <strong><%= t('activerecord.attributes.user.email') %>:</strong><br>
+                      <%= @user.email %><br>
+                      <strong><%= t('activerecord.attributes.user.name') %>:</strong><br>
+                      <%= @user.name %><br>
+                      <strong><%= t('activerecord.attributes.user.cpf') %>:</strong><br>
+                      <%= @user.cpf %><br>
+                      <strong><%= t('activerecord.attributes.user.rg') %>:</strong><br>
+                      <%= @user.rg %><br>
+                      <strong><%= t('activerecord.attributes.user.date_birth') %>:</strong><br>
+                      <%= format_date(@user.date_birth) %><br>
+                      <strong><%= t('activerecord.attributes.user.sex') %>:</strong><br>
+                      <%= @user.sex %><br>
+                      <strong><%= t('activerecord.attributes.user.functional_registration') %>:</strong><br>
+                      <%= @user.functional_registration %><br>
+                      <strong><%= t('activerecord.attributes.user.uf') %>:</strong><br>
+                      <%= @user.uf %><br>
+                      <strong><%= t('activerecord.attributes.user.city') %>:</strong><br>
+                      <%= @user.city %><br>
+                      <strong><%= t('activerecord.attributes.user.street') %>:</strong><br>
+                      <%= @user.street %><br>
+                      <strong><%= t('activerecord.attributes.user.neighborhood') %>:</strong><br>
+                      <%= @user.neighborhood %><br>
+                      <strong><%= t('activerecord.attributes.user.number_address') %>:</strong><br>
+                      <%= @user.number_address %><br>
+                      <strong><%= t('activerecord.attributes.user.complement') %>:</strong><br>
+                      <%= @user.complement %><br>
+                      <strong><%= t('activerecord.attributes.user.phone') %>:</strong><br>
+                      <%= @user.phone %><br>
+                      <strong><%= t('activerecord.attributes.user.status') %>:</strong><br>
+                      <%= boolean_format(@user.status) %><br>
+                    </address>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-print-none mo-mt-2">
+              <div class="float-right">
+                <%= link_to 'Editar', edit_admin_user_path(@user), class: 'btn btn-success waves-effect waves-light' %>
+                <%= link_to 'Voltar', admin_users_path, class: 'btn btn-primary waves-effect waves-light' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

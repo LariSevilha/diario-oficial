@@ -1,0 +1,36 @@
+<div class="page-content-wrapper ">
+  <div class="container-fluid">
+    <div class="row d-print-none">
+      <div class="col-sm-12">
+        <h5 class="page-title">Detalhes</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card m-b-30">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="invoice-title"></div>
+                <div class="row">
+                  <div class="col-6">
+                    <address>
+                      <strong><%= t('activerecord.attributes.diary_category.name') %>:</strong><br>
+                      <%= @diary_category.name %><br>
+                    </address>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-print-none mo-mt-2">
+              <div class="float-right">
+                <%= link_to 'Editar', edit_admin_diary_category_path(@diary_category), class: 'btn btn-success waves-effect waves-light' %>
+                <%= link_to 'Voltar', admin_diary_categorys_path, class: 'btn btn-primary waves-effect waves-light' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

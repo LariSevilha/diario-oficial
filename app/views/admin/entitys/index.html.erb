@@ -1,0 +1,85 @@
+<%= render '/admin/shared/modal_delete' %>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card m-b-30">
+      <div class="card-body">
+        <h4 class="mt-0 header-title"><%= t('activerecord.models.entity', count: 2) %></h4>
+        <%= render '/admin/shared/search' %> <!-- Campo de busca adicionado aqui -->
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th><%= t('activerecord.attributes.entity.logo') %></th>
+                <th><%= t('activerecord.attributes.entity.name_entity') %></th>
+                <th><%= t('activerecord.attributes.entity.cnpj') %></th>
+                <th><%= t('activerecord.attributes.entity.uf') %></th>
+                <th><%= t('activerecord.attributes.entity.city') %></th>
+                <th><%= t('activerecord.attributes.entity.type_entity') %></th>
+                <th><%= t('activerecord.attributes.entity.user') %></th>
+                <th><%= t('activerecord.attributes.entity.status') %></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @entitys.each do |entity| %>
+                <tr>
+                  <td><%= entity.id %></td>
+                  <td>
+                    <% if entity.logo.present? %>
+                      <div class="" id="user-avatar">
+                        <%= image_tag entity.logo.url, class: "img-thumbnail", alt: "logo", style: "width: 80px; height: 80px;" %>
+                      </div>
+                    <% end %>
+                  </td>
+                  <td><%= entity.name_entity %></td>
+                  <td><%= entity.cnpj %></td>
+                  <td><%= entity.uf %></td>
+                  <td><%= entity.city %></td>
+                  <td><%= entity.type_entity.name %></td>
+                  <td><%= entity.user.name %></td>
+                  <td><%= boolean_format(entity.status) %></td>
+                  <td>
+                    <%= button_to log_entity_admin_entity_path(entity), method: :post, class: 'btn btn-secondary waves-effect', title: 'Logar' do %>
+                      <% if entity.id== current_user.logged %>
+                        <i class="mdi mdi-heart"></i>
+                      <% else %>
+                        <i class="mdi mdi-heart-outline"></i>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to [:admin, entity], class: 'btn btn-success', title: 'Mostrar detalhes' do %>
+                      <i class="fa fa-eye"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to edit_admin_entity_path(entity), class: 'btn btn-primary', title: 'Editar' do %>
+                      <i class="dripicons-document-edit"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= button_to [:admin, entity], method: :delete, class: 'btn btn-danger delete-button', formaction: admin_entity_path(entity), id: "deleteButton-#{entity.id}", title: 'Deletar' do %>
+                      <i class="dripicons-document-delete"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <br>
+        <%= link_to new_admin_entity_path, class: 'btn btn-info' do %>
+          <i class="typcn typcn-document-add"></i> Adicionar
+        <% end %>
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+          <%= paginate @entitys, theme: :admin, paginator: 'kaminari/admin/paginator', paginated_collection: @entitys %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end row -->

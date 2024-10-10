@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Sistema | Diário Oficial</title>
+    <meta content="Admin Dashboard" name="description" />
+    <meta content="ThemeDesign" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "admin/admin", media: "all", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "admin/jquery.min" %>
+    <%= stylesheet_link_tag "admin/bootstrap.min", "admin/icons", "admin/style", "admin/morris", "admin/summernote-bs4", media: "all", "data-turbo-track": "reload" %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+  </head>
+  <body class="fixed-left">
+    <!-- Loader -->
+    <div id="preloader">
+      <div id="status">
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <div id="wrapper">
+      <%= render '/admin/shared/left_sidebar' %>
+      <div class="content-page">
+        <div class="content">
+          <%= render '/admin/shared/top_bar' %>
+          <%= render 'admin/shared/flash_messages' %>
+          <%= yield %>
+          <%= render '/admin/shared/footer' %>
+        </div>
+      </div>
+    </div>
+    <%= javascript_include_tag "admin/bootstrap.bundle.min", "admin/modernizr.min", "admin/detect", "admin/fastclick",
+    "admin/jquery.slimscroll", "admin/jquery.blockUI", "admin/waves", "admin/jquery.nicescroll",
+    "admin/jquery.scrollTo.min", "admin/skycons.min", "admin/jquery.peity.min", "admin/morris.min", "admin/raphael-min",
+    "admin/dashboard", "admin/app", "admin/modal-delete", "admin/summernote-bs4.min", "admin/summernote-script","admin/delete-image",
+    "admin/masks","admin/cep_script", "admin/alertify", "admin/alertify-init","admin/components/official-diary","admin/components/user-script" ,"data-turbo-track": "reload", defer: true %>
+  </body>
+</html>

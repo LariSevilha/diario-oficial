@@ -1,0 +1,72 @@
+<div class="modal fade" id="sectionModal" tabindex="-1" role="dialog" aria-labelledby="sectionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sectionModalLabel">Adicionar Seção</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="new_section_form" action="/admin/sections" method="POST">
+          <div class="form-group" id="input_text_field">
+            <label for="title">Descrição</label><br>
+            <input id="title" name="section[title]" class="form-control"></input>
+        </div>
+        <div class="form-group">
+          <label for="branch_government_id">Poder Estatal</label><br>
+          <select id="branch_government_id" name="section[branch_government_id]" class="form-control">
+            <option value="">Selecione</option>
+            <% BranchGovernment.all.each do |bg| %>
+              <option value="<%= bg.id %>"><%= bg.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="diary_category_id">Categoria</label><br>
+          <select id="diary_category_id" name="section[diary_category_id]" class="form-control">
+            <option value="">Selecione</option>
+            <% DiaryCategory.all.each do |dc| %>
+              <option value="<%= dc.id %>"><%= dc.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="diary_sub_category_id">Subcategoria</label><br>
+          <select id="diary_sub_category_id" name="section[diary_sub_category_id]" class="form-control">
+            <option value="">Selecione</option>
+            <% DiarySubCategory.all.each do |ds| %>
+              <option value="<%= ds.id %>"><%= ds.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form-group" id="content-type-radio">
+          <label for="content_type">Tipo de Conteúdo</label><br>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-light active">
+              <input type="radio" name="section[content_type]" id="option1" value="Arquivo" checked /> Arquivo
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" name="section[content_type]" id="option2" value="Texto" /> Texto
+            </label>
+          </div>
+        </div>
+        <div class="form-group" id="file_upload_field">
+          <label for="filename">Arquivos</label><br>
+          <input type="file" name="section[file_sections][]" multiple>
+        </div>
+        <div class="form-group" id="text_area_field">
+          <label for="description">Conteúdo</label><br>
+          <textarea id="description" name="section[description]" class="summernote form-control"></textarea>
+        </div>
+        <%= render 'table_file' %>
+        <input type="hidden" name="section[official_diary_id]" value="<%= @official_diary.id %>">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+    </div>
+  </div>
+</div>
+</div>
