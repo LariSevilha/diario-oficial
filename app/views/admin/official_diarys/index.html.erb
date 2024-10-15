@@ -196,4 +196,36 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const currentTime = new Date();
+  const deadline = new Date();
+  deadline.setHours(16, 0, 0);  // Definir horário limite 18:00
+  
+  const publishButtons = document.querySelectorAll('.publish-button');
+
+  publishButtons.forEach(button => {
+    const isPublished = button.getAttribute('data-published') === 'true';
+    const buttonContainer = button.closest('td');
+    
+    // Verificar se o horário limite já passou
+    if (currentTime > deadline) {
+      // Desabilitar botão se passou do horário
+      button.classList.add('disabled');
+      button.disabled = true;
+      buttonContainer.title = "Publicação bloqueada após às 18h";
+    } else {
+      button.addEventListener('click', function(event) {
+        if (isPublished) {
+          event.preventDefault();
+          const warningCard = document.getElementById('publishedWarningCard');
+          warningCard.style.display = 'block';
+        } else {
+          const targetModal = button.getAttribute('data-target');
+          $(targetModal).modal('show');
+        }
+      });
+    }
+  });
+});
 </script>
