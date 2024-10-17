@@ -104,3 +104,27 @@
     </div>
   </div>
 </section>
+
+<script>
+  function toggleTab(evt, tabName) {
+    var tabContent = document.getElementById(tabName);
+    var buttons = document.querySelectorAll('.tablinks');
+
+    if (tabContent.style.display === "block") {
+      tabContent.style.display = "none";
+      evt.currentTarget.className = evt.currentTarget.className.replace(" active", "");
+    } else {
+      var openTabs = document.querySelectorAll('.tabcontent[style*="display: block"]');
+      if (openTabs.length > 0) {
+        openTabs.forEach(function(openTab) {
+          openTab.style.display = "none";
+        });
+        buttons.forEach(function(button) {
+          button.className = button.className.replace(" active", "");
+        });
+      }
+      tabContent.style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  }
+</script>
